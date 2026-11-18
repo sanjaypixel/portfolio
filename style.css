@@ -1324,3 +1324,60 @@ button:focus-visible {
     }
 
 }
+
+
+/* FIX: MOBILE NAVIGATION */
+@media (max-width: 768px) {
+    .nav {
+        position: relative;
+    }
+
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 72px;
+        left: 0;
+        right: 0;
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        background: var(--surface);
+        z-index: 1001;
+    }
+
+    .nav-links.open {
+        display: flex !important;
+    }
+
+    .menu-toggle {
+        display: block !important;
+        position: relative;
+        z-index: 1002;
+    }
+}
+
+/* FIX: THEME BUTTON */
+.theme-toggle {
+    cursor: pointer;
+    color: var(--ink);
+    background: var(--surface);
+    border: 1px solid var(--line);
+}
+
+/* FIX: SKILL PROGRESS */
+.progress-track {
+    display: block;
+    width: 100%;
+    height: 10px;
+    background: var(--alt);
+    overflow: hidden;
+}
+
+.progress-fill {
+    display: block;
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, #176b9b, #3d9acb);
+    border-radius: 30px;
+    transition: width 1.4s ease;
+}
