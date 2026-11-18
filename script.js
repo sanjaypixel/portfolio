@@ -48,28 +48,44 @@ if (themeToggle) {
 }
 
 // Animate skill bars when the skills section enters the screen
-const skillSection = document.getElementById("skills");
+
+// Animate skill bars individually when they enter the screen
 const progressBars = document.querySelectorAll(".progress-fill");
 
-if ("IntersectionObserver" in window && skillSection) {
-  const skillObserver = new IntersectionObserver((entries, observer) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        progressBars.forEach((bar) => {
-          const level = Math.max(0, Math.min(100, Number(bar.dataset.level) || 0));
-          bar.style.width = `${level}%`;
-        });
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.25 });
+function animateSkillBar(bar) {
+  const level = Math.max(
+    0,
+    Math.min(100, Number(bar.dataset.level) || 0)
+  );
 
-  skillObserver.observe(skillSection);
+  bar.style.width = `${level}%`;
+}
+
+if ("IntersectionObserver" in window) {
+  const skillObserver = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          animateSkillBar(entry.target);
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    {
+      threshold: 0.1
+    }
+  );
+
+  progressBars.forEach((bar) => {
+    skillObserver.observe(bar);
+  });
+
 } else {
   progressBars.forEach((bar) => {
-    bar.style.width = `${bar.dataset.level}%`;
+    animateSkillBar(bar);
   });
 }
+
 
 // Current year in footer
 const yearElement = document.getElementById("year");
